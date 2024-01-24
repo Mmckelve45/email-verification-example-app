@@ -1,0 +1,1131 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Shark Tank API",
+    "description": "How to retrieve all the information you need about 'Shark Tank'"
+  },
+  "servers": [
+    {
+      "url": "https://sharktank-api.dev/api"
+    }
+  ],
+  "tags": [
+    {
+      "name": "sharks",
+      "description": "Everything about the investors"
+    },
+    {
+      "name": "seasons",
+      "description": "Everything about each season"
+    },
+    {
+      "name": "episodes",
+      "description": "Everything about each episode"
+    },
+    {
+      "name": "pitches",
+      "description": "everything about each pitch"
+    }
+  ],
+  "paths": {
+    "/sharks": {
+      "get": {
+        "tags": ["sharks"],
+        "summary": "Return all sharks",
+        "description": "Sharks are returned with an object containing an array of all sharks and a count value which is the length of the array returned.",
+        "responses": {
+          "200": {
+            "description": "An object with an array of all sharks and a count.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/sharks"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something went wrong! Please try again!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sharks/{shark_id}": {
+      "parameters": [
+        {
+          "name": "shark_id",
+          "description": "The unique identifier of the shark",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/shark_id"
+          }
+        }
+      ],
+      "get": {
+        "tags": ["sharks"],
+        "summary": "Return shark by shark_id",
+        "description": "A single shark object is returned from the associated shark_id",
+        "responses": {
+          "200": {
+            "description": "The shark corresponding to the provided `shark_id`",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/shark"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid shark_id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Shark not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something went wrong! Please try again!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/seasons": {
+      "get": {
+        "tags": ["seasons"],
+        "summary": "Return all seasons",
+        "description": "Seasons are returned with an object containing an array of all seasons and a count value which is the length of the array returned.",
+        "responses": {
+          "200": {
+            "description": "An object with an array of all season objects and a count.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/seasons"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something went wrong! Please try again!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/seasons/{season_id}": {
+      "parameters": [
+        {
+          "name": "season_id",
+          "description": "The unique identifier of the season",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/season_id"
+          }
+        }
+      ],
+      "get": {
+        "tags": ["seasons"],
+        "summary": "Return season by season_id",
+        "description": "A single season object is returned from the associated season_id",
+        "responses": {
+          "200": {
+            "description": "The season corresponding to the provided `season_id`",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/season"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid season_id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Season not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something went wrong! Please try again!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/episodes": {
+      "parameters": [
+        {
+          "name": "shark",
+          "description": "The name of any shark",
+          "in": "query",
+          "required": false,
+          "type": "string",
+          "example": "Mark Cuban",
+          "schema": {
+            "$ref": "#/components/schemas/sharkName"
+          }
+        }
+      ],
+      "get": {
+        "tags": ["episodes"],
+        "summary": "Return all episodes",
+        "description": "Episodes are returned with an object containing an array of all episodes and a count value which is the length of the array returned.",
+        "responses": {
+          "200": {
+            "description": "An object with an array of all episode objects and a count.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/episodes"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something went wrong! Please try again!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/episodes/{episode_id}": {
+      "parameters": [
+        {
+          "name": "episode_id",
+          "description": "The unique identifier of the episode",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/episode_id"
+          }
+        }
+      ],
+      "get": {
+        "tags": ["episodes"],
+        "summary": "Return episode by episode_id",
+        "description": "A single episode object is returned from the associated episode_id",
+        "responses": {
+          "200": {
+            "description": "The season corresponding to the provided `episode_id`",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/episode"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Episode not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something went wrong! Please try again!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/episodes/season/{season_id}": {
+      "parameters": [
+        {
+          "name": "season_id",
+          "description": "The unique identifier for a season",
+          "in": "path",
+          "required": true,
+          "type": "integer",
+          "example": 4,
+          "schema": {
+            "$ref": "#/components/schemas/season_id"
+          }
+        }
+      ],
+      "get": {
+        "tags": ["episodes"],
+        "summary": "Return all episodes for a season",
+        "description": "Episodes are returned with an object containing an array of all episodes in a season and a count value which is the length of the array returned.",
+        "responses": {
+          "200": {
+            "description": "An object with an array of all episode objects and a count associated with the given season_id.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/episodes"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No episodes found for this season",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something went wrong! Please try again!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pitches": {
+      "parameters": [
+        {
+          "name": "shark",
+          "description": "Filter by the name of any shark",
+          "in": "query",
+          "required": false,
+          "type": "string",
+          "example": "Mark Cuban",
+          "schema": {
+            "$ref": "#/components/schemas/sharkName"
+          }
+        },
+        {
+          "name": "deal",
+          "description": "Filter on only deals that were made or lost",
+          "in": "query",
+          "required": false,
+          "type": "boolean",
+          "example": true
+        },
+        {
+          "name": "gender",
+          "description": "Filter on gender of the entrepreneur(s)",
+          "in": "query",
+          "required": false,
+          "example": "Female",
+          "schema": {
+            "$ref": "#/components/schemas/gender"
+          }
+        },
+        {
+          "name": "category",
+          "description": "Filter on category of the company",
+          "in": "query",
+          "required": false,
+          "example": "Fitness_Outdoors",
+          "schema": {
+            "$ref": "#/components/schemas/category"
+          }
+        }
+      ],
+      "get": {
+        "tags": ["pitches"],
+        "summary": "Return all pitches",
+        "description": "Pitches are returned with an object containing an array of all pitches and a count value which is the length of the array returned.",
+        "responses": {
+          "200": {
+            "description": "An object with an array of all pitch objects and a count.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/pitches"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something went wrong! Please try again!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pitches/{pitch_id}": {
+      "parameters": [
+        {
+          "name": "pitch_id",
+          "description": "The unique identifier of the pitch",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/pitch_id"
+          }
+        }
+      ],
+      "get": {
+        "tags": ["pitches"],
+        "summary": "Return pitch by pitch_id",
+        "description": "A single pitch object is returned from the associated pitch_id",
+        "responses": {
+          "200": {
+            "description": "The pitch corresponding to the provided `pitch_id`",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/pitch"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pitch not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Something went wrong! Please try again!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "shark": {
+        "type": "object",
+        "required": [
+          "shark_id",
+          "name",
+          "summary",
+          "description",
+          "dob",
+          "is_guest"
+        ],
+        "properties": {
+          "shark_id": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The unique identifier of a shark"
+          },
+          "name": {
+            "type": "string",
+            "example": "Mark Cuban"
+          },
+          "summary": {
+            "type": "string",
+            "example": "Co-founder of Broadcast.com"
+          },
+          "description": {
+            "type": "string",
+            "example": "Mark Cuban is an investor who lives for his family, his \"Shark Tank\" companies and the Dallas Mavericks. He is the owner of the 2011 World Champion Dallas Mavericks and bestselling author of \"How to Win at the Sport of Business,\" and was an entrepreneur from the early age of 12 when he sold garbage bags door to door. Today, Cuban is the highly successful entrepreneur and investor with an ever-growing portfolio of businesses. A lifelong entrepreneur and investor, Cuban has started and built multiple industry-changing organizations including Costplusdrugs.com, which sells medications at industry low pricing with total cost transparency, which he founded with Dr. Alex Oshmansky."
+          },
+          "img": {
+            "type": "string",
+            "example": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/MarkCuban2023.jpg/440px-MarkCuban2023.jpg",
+            "description": "Image of the Shark"
+          },
+          "dob": {
+            "type": "string",
+            "example": "1958-07-31",
+            "description": "Date of Birth"
+          },
+          "is_guest": {
+            "type": "boolean",
+            "description": "If the shark is not considered a regular on the show",
+            "example": false
+          }
+        }
+      },
+      "sharks": {
+        "type": "object",
+        "properties": {
+          "sharks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/shark"
+            }
+          },
+          "count": {
+            "type": "integer",
+            "description": "The number of sharks returned",
+            "example": 35
+          }
+        }
+      },
+      "season": {
+        "type": "object",
+        "required": [
+          "season_id",
+          "name",
+          "summary",
+          "description",
+          "start_date",
+          "end_date",
+          "num_episodes",
+          "shark_info"
+        ],
+        "properties": {
+          "season_id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 12,
+            "description": "The unique identifier for the season"
+          },
+          "summary": {
+            "type": "string",
+            "example": "This is the twelfth season of Shark Tank. The 12th season was filmed inside a production bubble at the Venetian Las Vegas to allow for social distancing during the COVID-19 pandemic."
+          },
+          "start_date": {
+            "type": "string",
+            "example": "2020-10-16"
+          },
+          "end_date": {
+            "type": "string",
+            "example": "2021-05-21"
+          },
+          "num_episodes": {
+            "type": "integer",
+            "description": "Number of episodes in the season",
+            "format": "int32",
+            "example": 25
+          },
+          "shark_info": {
+            "type": "string",
+            "description": "Details about the sharks involved for this season",
+            "example": "Guest sharks this season include Blake Mycoskie, founder of TOMS and co-founder of Madefor, and Kendra Scott, founder and CEO of Kendra Scott LLC. Returning guest Sharks include Alex Rodriguez, baseball player and founder and CEO of A-Rod Corp, and Daniel Lubetzky, founder and executive chairman of Kind."
+          }
+        }
+      },
+      "seasons": {
+        "type": "object",
+        "properties": {
+          "seasons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/season"
+            }
+          },
+          "count": {
+            "type": "integer",
+            "description": "The number of seasons returned",
+            "example": 35
+          }
+        }
+      },
+      "company": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The id associated with the pitch",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the company giving their pitch",
+            "example": "Mr. Tod's Pie Factory"
+          },
+          "is_deal": {
+            "type": "boolean",
+            "description": "If the company make a deal on the show",
+            "example": true
+          }
+        }
+      },
+
+      "episode": {
+        "type": "object",
+        "required": [
+          "episode_id",
+          "sharks",
+          "season_id",
+          "episode",
+          "date",
+          "companies",
+          "title",
+          "wikipedia_url"
+        ],
+        "properties": {
+          "sharks": {
+            "type": "array",
+            "example": [
+              "Kevin Harrington",
+              "Daymond John",
+              "Kevin O'Leary",
+              "Barbara Corcoran",
+              "Robert Herjavec"
+            ]
+          },
+          "season_id": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The season this episode belongs to",
+            "example": 1
+          },
+          "episode_id": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The unique identifier for this episode",
+            "example": 1
+          },
+          "episode": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The episode number for specific to the season it belongs",
+            "example": 1
+          },
+          "date": {
+            "type": "string",
+            "description": "The day the episode aired",
+            "example": "2009-08-09"
+          },
+          "companies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/company"
+            },
+            "example": [
+              {
+                "id": 1,
+                "name": "Mr. Tod's Pie Factory",
+                "isDeal": true
+              },
+              {
+                "id": 2,
+                "name": "Ionic Ear",
+                "isDeal": false
+              },
+              {
+                "id": 3,
+                "name": "Wispots",
+                "isDeal": false
+              },
+              {
+                "id": 4,
+                "name": "Ava the Elephant",
+                "isDeal": true
+              },
+              {
+                "id": 5,
+                "name": "College Foxes Packing Boxes",
+                "isDeal": false
+              }
+            ]
+          },
+          "title": {
+            "type": "string",
+            "example": "\"Episode 101\"",
+            "description": "Pretty useless field.  Some are different"
+          },
+          "wikipedia_url": {
+            "type": "string",
+            "example": "https://en.wikipedia.org/wiki/Shark_Tank_(season_1)",
+            "description": "Source of the information"
+          }
+        }
+      },
+      "episodes": {
+        "type": "object",
+        "properties": {
+          "episodes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/episode"
+            }
+          },
+          "count": {
+            "type": "integer",
+            "description": "The number of episodes returned",
+            "example": 308
+          }
+        }
+      },
+      "pitch": {
+        "type": "object",
+        "required": [
+          "pitch_id",
+          "name",
+          "ask_summary",
+          "ask_amt",
+          "ask_perc",
+          "summary",
+          "entrepreneur_gender",
+          "entrepreneur",
+          "category",
+          "is_deal",
+          "ask_valuation",
+          "episode",
+          "season_id",
+          "air_date",
+          "entrepreneur"
+        ],
+        "properties": {
+          "pitch_id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 184
+          },
+          "name": {
+            "type": "string",
+            "example": "Scrub Daddy"
+          },
+          "ask_summary": {
+            "type": "string",
+            "example": "$100,000 for 10%",
+            "description": "What the entrepreneur asked for when they entered the tank."
+          },
+          "ask_amt": {
+            "type": "integer",
+            "format": "int64",
+            "example": 100000,
+            "description": "The amount the entrepreneur is asking for"
+          },
+          "ask_perc": {
+            "type": "number",
+            "format": "int64",
+            "multipleOf": 0.01,
+            "example": 0.1,
+            "description": "The amount the entrepreneur is asking for"
+          },
+          "summary": {
+            "type": "string",
+            "example": "Flextexture sponge that’s soft in hot water and hard in cold water"
+          },
+          "deal_structure": {
+            "type": "array",
+            "nullable": true,
+            "description": "Can be null, or an array with Equity, Debt, and/or Royalty.  If the deal involved debt, royalty, or equity or some mix.",
+            "example": ["Equity"]
+          },
+          "entrepreneur_gender": {
+            "type": "string",
+            "description": "Gender of the entrepreneur(s) for the pitch.  Can be Male, Female, or Hybrid.",
+            "example": "Male"
+          },
+          "entrepreneur": {
+            "type": "array",
+            "description": "Array of entrepreneurs involved in the pitch",
+            "example": ["Aaron Krause"]
+          },
+          "category": {
+            "type": "string",
+            "description": "The category the product or service falls under.",
+            "example": "Lifestyle_Home"
+          },
+          "deal_amt_equity": {
+            "type": "integer",
+            "nullable": true,
+            "format": "int64",
+            "description": "If a deal was made, this is the amount exchanged for equity in the company.  If no deal, this will be null",
+            "example": 200000
+          },
+          "deal_perc_equity": {
+            "type": "number",
+            "nullable": true,
+            "multipleOf": 0.01,
+            "description": "If a deal was made, this is the equity exchanged to the shark.  If no deal, this will be null",
+            "example": 0.2
+          },
+          "status": {
+            "type": "string",
+            "nullable": true,
+            "description": "If the business is still operational, acquired, or out of business.  Please note, these are likely out of date.",
+            "example": "In Business"
+          },
+          "is_deal": {
+            "type": "boolean",
+            "description": "Was there a deal made?",
+            "example": true
+          },
+          "deal_amt_debt": {
+            "type": "boolean",
+            "nullable": true,
+            "description": "Amount of debt received from a shark",
+            "example": null
+          },
+          "website": {
+            "type": "string",
+            "nullable": true,
+            "example": "scrubdaddy.com"
+          },
+          "deal_summary": {
+            "type": "string",
+            "nullable": true,
+            "example": "$200,000 for 20%",
+            "description": "The deal the entrepreneur made."
+          },
+          "deal_valuation": {
+            "type": "integer",
+            "nullable": true,
+            "format": "int64",
+            "description": "If a deal was made, this is what they were valued at based on the equity received.  amountReceived/equityReceived",
+            "example": 1000000
+          },
+          "ask_valuation": {
+            "type": "integer",
+            "format": "int64",
+            "description": "What the company valued themselves at walking into the tank.  amountAsked/equityOffered",
+            "example": 1000000
+          },
+          "bite": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true,
+            "description": "The difference in the ask and deal valuation.  How much they think they're worth vs how much they made a deal for.",
+            "example": 0
+          },
+          "episode": {
+            "type": "integer",
+            "description": "episode number of the season this pitch is in.  NOT the overall episode.",
+            "format": "int32",
+            "example": 7
+          },
+          "season_id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 4
+          },
+          "air_date": {
+            "type": "string",
+            "example": "October 26, 2012"
+          },
+          "investors": {
+            "type": "array",
+            "nullable": true,
+            "example": ["Lori Greiner"]
+          }
+        }
+      },
+      "pitches": {
+        "type": "object",
+        "properties": {
+          "pitches": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/pitch"
+            }
+          },
+          "count": {
+            "type": "integer",
+            "description": "The number of pitches returned",
+            "example": 1235
+          }
+        }
+      },
+      "category": {
+        "type": "string",
+        "enum": [
+          "Accessories_Gadgets",
+          "Children",
+          "Clothing_Fashion",
+          "Cosmetics_Beauty",
+          "Education",
+          "Fitness_Outdoors",
+          "Food_Beverage",
+          "Health_SelfCare",
+          "Lifestyle_Home",
+          "Media_Entertainment",
+          "Other",
+          "PetProducts",
+          "Services",
+          "Software_Tech",
+          "Travel_Auto"
+        ]
+      },
+      "gender": {
+        "type": "string",
+        "enum": ["Male", "Female", "Hybrid"]
+      },
+      "sharkName": {
+        "type": "string",
+        "enum": [
+          "Mark Cuban",
+          "Lori Greiner",
+          "Daymond John",
+          "Robert Herjavec",
+          "Barbara Corcoran",
+          "Kevin O'Leary",
+          "Emma Grede",
+          "Kevin Hart",
+          "Troy Carter",
+          "Peter Jones",
+          "Daniel Lubetzky",
+          "Nirav Tolia",
+          "Kevin Harrington",
+          "Chris Sacca",
+          "Jeff Foxworthy",
+          "John Paul Dejoria",
+          "Steve Tisch",
+          "Nick Woodman",
+          "Ashton Kutcher",
+          "Richard Branson",
+          "Rohan Oza",
+          "Alex Rodriguez",
+          "Sara Blakely",
+          "Bethenny Frankel",
+          "Jamie Siminoff",
+          "Matt Higgins",
+          "Charles Barkley",
+          "Alli Webb",
+          "Anne Wojcicki",
+          "Maria Sharapova",
+          "Katrina Lake",
+          "Blake Mycoskie",
+          "Kendra Scott",
+          "Gwyneth Paltrow",
+          "Tony Xu",
+          "Candace Nelson",
+          "Michael Rubin",
+          "Jason Blum"
+        ]
+      },
+
+      "Error": {
+        "type": "object",
+        "required": ["error"],
+        "properties": {
+          "error": {
+            "description": "A human readable error message",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "ApiKey": {
+        "type": "apiKey",
+        "required": false,
+        "in": "header",
+        "name": "X-Api-Key"
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKey": []
+    }
+  ]
+}
